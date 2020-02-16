@@ -9,7 +9,7 @@ const branchSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectID,
         ref: 'Subject'
     }]
-});
+}, {timestamps: true});
 
 const Branch = mongoose.model('Branch', branchSchema);
 
