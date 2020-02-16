@@ -3,6 +3,7 @@ const router = express.Router();
 const {genericErrorCodes} = require('../constants');
 const {getAllBranches, getAllSubjects, getAllSkills, addSubject, addSkill, addBranch} = require('../controllers/home_controller');
 const {sendError} = require('../controllers/error_controller');
+const verifyUser = require('../middleware/verify_user');
 
 router.get('/branch', (req, res) => {
     getAllBranches()
@@ -22,21 +23,21 @@ router.get('/skill', (req, res) => {
         .catch(err => res.status(genericErrorCodes.someErrorOccurred).send(err))
 });
 
-router.post('/subject', (req, res) => {
+router.post('/subject', verifyUser, (req, res) => {
     const subjectName = req.query.subject_name;
     addSubject(subjectName)
         .then((result) => res.status(genericErrorCodes.success).send(result))
         .catch(err => res.status(genericErrorCodes.someErrorOccurred).send(sendError(err.code, err.name, err.message)))
 });
 
-router.post('/skill', (req, res) => {
+router.post('/skill', verifyUser, (req, res) => {
     const skillName = req.query.skill_name;
     addSkill(skillName)
         .then((result) => res.status(genericErrorCodes.success).send(result))
         .catch(err => res.status(genericErrorCodes.someErrorOccurred).send(sendError(err.code, err.name, err.message)))
 });
 
-router.post('/branch', (req, res) => {
+router.post('/branch', verifyUser, (req, res) => {
     const branchName = req.query.branch_name;
     let subjects = [];
     if (req.query.subjects && req.query.subjects.trim().length > 0) {

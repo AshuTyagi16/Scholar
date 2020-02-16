@@ -3,6 +3,7 @@ const router = express.Router();
 const {getLiveSchedule, getUpcomingSchedule, getPastSchedule, addJob, addCompany, getAllCompanies, applyJob} = require('../controllers/placement_controller');
 const {sendError} = require('../controllers/error_controller');
 const {genericErrorCodes} = require('../constants');
+const verifyUser = require('../middleware/verify_user');
 
 router.get('/schedule/live', (req, res) => {
     const userId = req.query.userId;
@@ -31,7 +32,7 @@ router.get('/company', (req, res) => {
         .catch(err => res.status(genericErrorCodes.someErrorOccurred).send(sendError(err.code, err.name, err.message)))
 });
 
-router.post('/job', (req, res) => {
+router.post('/job', verifyUser, (req, res) => {
     const companyId = req.query.company;
     const title = req.query.title;
     const description = req.query.description;
@@ -56,7 +57,7 @@ router.post('/job', (req, res) => {
         .catch(err => res.status(genericErrorCodes.someErrorOccurred).send(sendError(err.code, err.name, err.message)))
 });
 
-router.post('/company', (req, res) => {
+router.post('/company', verifyUser, (req, res) => {
     const name = req.query.name;
     const website = req.query.website;
     const logo = req.query.logo;

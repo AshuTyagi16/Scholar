@@ -31,11 +31,13 @@ const homeErrorCodes = {
 };
 
 const userErrorCodes = {
-    noUserIdProvided: 421
+    noUserIdProvided: 421,
+    userNotAuthorized: 435
 };
 
 const userErrorMessage = {
-    noUserIdProvided: 'Please Provide UserId'
+    noUserIdProvided: 'Please Provide UserId',
+    userNotAuthorized: 'User Not Authorized'
 };
 
 const homeErrorMessages = {
