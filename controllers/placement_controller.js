@@ -6,16 +6,24 @@ const {
     companyErrorCodes, companyErrorMessage
 } = require('../constants');
 
-async function getUpcomingCompanies(userId) {
-
+async function getUpcomingSchedule(userId) {
+    return [];
 }
 
-async function getPassCompanies(userId) {
-
+async function getPastSchedule(userId) {
+    return [];
 }
 
-async function getLiveCompanies(userId) {
+async function getLiveSchedule(userId) {
+    return [];
+}
 
+async function getAllCompanies() {
+    try {
+        return await Company.find();
+    } catch (e) {
+        throw e;
+    }
 }
 
 async function addJob(companyId, skills, title, description, place) {
@@ -111,8 +119,9 @@ async function addCompany(name, website, logo) {
     }
 }
 
-module.exports.getUpcomingCompanies = getUpcomingCompanies;
-module.exports.getPassCompanies = getPassCompanies;
-module.exports.getLiveCompanies = getLiveCompanies;
+module.exports.getUpcomingSchedule = getUpcomingSchedule;
+module.exports.getPastSchedule = getPastSchedule;
+module.exports.getLiveSchedule = getLiveSchedule;
+module.exports.getAllCompanies = getAllCompanies;
 module.exports.addJob = addJob;
 module.exports.addCompany = addCompany;

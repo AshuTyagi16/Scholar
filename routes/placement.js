@@ -1,26 +1,32 @@
 const express = require('express');
 const router = express.Router();
-const {getLiveCompanies, getUpcomingCompanies, getPassCompanies, addJob, addCompany} = require('../controllers/placement_controller');
+const {getLiveSchedule, getUpcomingSchedule, getPastSchedule, addJob, addCompany, getAllCompanies} = require('../controllers/placement_controller');
 const {sendError} = require('../controllers/error_controller');
 const {genericErrorCodes} = require('../constants');
 
-router.get('/live', (req, res) => {
+router.get('/schedule/live', (req, res) => {
     const userId = req.query.userId;
-    getLiveCompanies(userId)
+    getLiveSchedule(userId)
         .then((result) => res.status(genericErrorCodes.success).send(result))
         .catch(err => res.status(genericErrorCodes.someErrorOccurred).send(sendError(err.code, err.name, err.message)))
 });
 
-router.get('/upcoming', (req, res) => {
+router.get('/schedule/upcoming', (req, res) => {
     const userId = req.query.userId;
-    getUpcomingCompanies(userId)
+    getUpcomingSchedule(userId)
         .then((result) => res.status(genericErrorCodes.success).send(result))
         .catch(err => res.status(genericErrorCodes.someErrorOccurred).send(sendError(err.code, err.name, err.message)))
 });
 
-router.get('/past', (req, res) => {
+router.get('/schedule/past', (req, res) => {
     const userId = req.query.userId;
-    getPassCompanies(userId)
+    getPastSchedule(userId)
+        .then((result) => res.status(genericErrorCodes.success).send(result))
+        .catch(err => res.status(genericErrorCodes.someErrorOccurred).send(sendError(err.code, err.name, err.message)))
+});
+
+router.get('/company', (req, res) => {
+    getAllCompanies()
         .then((result) => res.status(genericErrorCodes.success).send(result))
         .catch(err => res.status(genericErrorCodes.someErrorOccurred).send(sendError(err.code, err.name, err.message)))
 });
