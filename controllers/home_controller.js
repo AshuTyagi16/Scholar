@@ -82,8 +82,38 @@ async function addSkill(skillName) {
     }
 }
 
+async function addBranch(branchName, subjects) {
+    try {
+        if (!branchName) throw {
+            code: homeErrorCodes.branchNameNotFound,
+            name: homeErrorMessages.branchNameNotFound,
+            message: homeErrorMessages.branchNameNotFoundMessage
+        };
+        let branch = await Branch.findOne({name: branchName});
+        if (branch) throw {
+            code: homeErrorCodes.branchAddedAlready,
+            name: homeErrorMessages.branchAddedAlready,
+            message: homeErrorMessages.branchAddedAlready
+        };
+        branch = new Branch({
+            name: branchName,
+            subject: subjects
+        });
+        branch = await branch.save();
+        if (!branch) throw {
+            code: genericErrorCodes,
+            name: genericErrorMessage.someErrorOccurred,
+            message: genericErrorMessage.someErrorOccurred,
+        };
+        return branch;
+    } catch (e) {
+        throw e;
+    }
+}
+
 module.exports.getAllBranches = getAllBranches;
 module.exports.getAllSubjects = getAllSubjects;
 module.exports.getAllSkills = getAllSkills;
 module.exports.addSubject = addSubject;
 module.exports.addSkill = addSkill;
+module.exports.addBranch = addBranch;
