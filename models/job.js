@@ -20,6 +20,10 @@ const jobSchema = new mongoose.Schema({
     place: {
         type: String,
         required: true
+    },
+    visit_date: {
+        type: Date,
+        required: true
     }
 }, {timestamps: true});
 

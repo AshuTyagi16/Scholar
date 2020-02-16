@@ -1,21 +1,177 @@
 const {Job} = require('../models/job');
 const {Company} = require('../models/company');
+const {Activity} = require('../models/activity');
 const {
     placementErrorCodes, placementErrorMessage,
     genericErrorCodes, genericErrorMessage,
-    companyErrorCodes, companyErrorMessage
+    companyErrorCodes, companyErrorMessage,
+    userErrorCodes, userErrorMessage
 } = require('../constants');
+const {modelChoicesJobState} = require('../constants');
+const mongoose = require('mongoose');
 
 async function getUpcomingSchedule(userId) {
-    return [];
+    try {
+        if (!userId) throw {
+            code: userErrorCodes.noUserIdProvided,
+            name: userErrorMessage.noUserIdProvided,
+            message: userErrorMessage.noUserIdProvided
+        };
+        userId = mongoose.Types.ObjectId(userId);
+        const today = new Date();
+        return await Job.aggregate([
+            {
+                $match: {
+                    visit_date: {$gt: today}
+                }
+            },
+            {
+                $lookup: {
+                    from: "activities",
+                    let: {uid: userId, jid: "$_id"},
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: {
+                                    $and: [
+                                        {$eq: ["$$uid", "$user"]},
+                                        {$eq: ["$$jid", "$job"]},
+                                        {$eq: [modelChoicesJobState.registered, "$type"]}
+                                    ]
+                                },
+                            }
+                        },
+                        {
+                            $project: {
+                                _id: 1
+                            }
+                        }
+                    ],
+                    as: "isRegistered"
+                }
+            },
+            {
+                $addFields: {
+                    isRegistered: {
+                        $cond: {if: {$gt: [{$size: "$isRegistered"}, 0]}, then: true, else: false}
+                    }
+                }
+            }
+        ]);
+    } catch (e) {
+        throw e;
+    }
 }
 
 async function getPastSchedule(userId) {
-    return [];
+    try {
+        if (!userId) throw {
+            code: userErrorCodes.noUserIdProvided,
+            name: userErrorMessage.noUserIdProvided,
+            message: userErrorMessage.noUserIdProvided
+        };
+        userId = mongoose.Types.ObjectId(userId);
+        const today = new Date();
+        return await Job.aggregate([
+            {
+                $match: {
+                    visit_date: {$lt: today}
+                }
+            },
+            {
+                $lookup: {
+                    from: "activities",
+                    let: {uid: userId, jid: "$_id"},
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: {
+                                    $and: [
+                                        {$eq: ["$$uid", "$user"]},
+                                        {$eq: ["$$jid", "$job"]},
+                                        {$eq: [modelChoicesJobState.placed, "$type"]},
+                                    ]
+                                },
+                            }
+                        },
+                        {
+                            $project: {
+                                _id: 1
+                            }
+                        }
+                    ],
+                    as: "isPlaced"
+                }
+            },
+            {
+                $addFields: {
+                    isPlaced: {
+                        $cond: {if: {$gt: [{$size: "$isPlaced"}, 0]}, then: true, else: false}
+                    }
+                }
+            }
+        ]);
+    } catch (e) {
+        throw e;
+    }
 }
 
 async function getLiveSchedule(userId) {
-    return [];
+    try {
+        if (!userId) throw {
+            code: userErrorCodes.noUserIdProvided,
+            name: userErrorMessage.noUserIdProvided,
+            message: userErrorMessage.noUserIdProvided
+        };
+        userId = mongoose.Types.ObjectId(userId);
+        const today = new Date();
+        const tomorrow = new Date();
+        tomorrow.setDate(today.getDate() + 1);
+        return await Job.aggregate([
+            {
+                $match: {
+                    $and: [
+                        {visit_date: {$gte: today}},
+                        {visit_date: {$lt: tomorrow}}
+                    ]
+                }
+            },
+            {
+                $lookup: {
+                    from: "activities",
+                    let: {uid: userId, jid: "$_id"},
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: {
+                                    $and: [
+                                        {$eq: ["$$uid", "$user"]},
+                                        {$eq: ["$$jid", "$job"]},
+                                        {$eq: [modelChoicesJobState.registered, "$type"]}
+                                    ]
+                                },
+                            }
+                        },
+                        {
+                            $project: {
+                                _id: 1
+                            }
+                        }
+                    ],
+                    as: "isRegistered"
+                }
+            },
+            {
+                $addFields: {
+                    isRegistered: {
+                        $cond: {if: {$gt: [{$size: "$isRegistered"}, 0]}, then: true, else: false}
+                    }
+                }
+            }
+        ]);
+    } catch (e) {
+        throw e;
+    }
 }
 
 async function getAllCompanies() {
@@ -26,7 +182,7 @@ async function getAllCompanies() {
     }
 }
 
-async function addJob(companyId, skills, title, description, place) {
+async function addJob(companyId, skills, title, description, place, visitData) {
     try {
         if (!companyId) throw {
             code: placementErrorCodes.noCompanyIdProvided,
@@ -53,12 +209,18 @@ async function addJob(companyId, skills, title, description, place) {
             name: placementErrorMessage.noJobTitleProvided,
             message: placementErrorMessage.noJobTitleProvided
         };
+        if (!visitData) throw {
+            code: placementErrorCodes.noDateProvided,
+            name: placementErrorMessage.noDateProvided,
+            message: placementErrorMessage.noDateProvided
+        };
         let job = new Job({
             company: companyId,
             skill: skills,
             title: title,
             description: description,
-            place: place
+            place: place,
+            visit_date: visitData
         });
 
         job = await job.save();
@@ -119,9 +281,39 @@ async function addCompany(name, website, logo) {
     }
 }
 
+async function applyJob(user, job) {
+    try {
+        if (!user) throw {
+            code: userErrorCodes.noUserIdProvided,
+            name: userErrorMessage.noUserIdProvided,
+            message: userErrorMessage.noUserIdProvided
+        };
+        if (!job) throw {
+            code: placementErrorCodes.noJobIdProvided,
+            name: placementErrorMessage.noJobIdProvided,
+            message: placementErrorMessage.noJobIdProvided
+        };
+        let activity = new Activity({
+            user: user,
+            job: job
+        });
+
+        activity = await activity.save();
+        if (!activity) throw {
+            code: genericErrorCodes,
+            name: genericErrorMessage.someErrorOccurred,
+            message: genericErrorMessage.someErrorOccurred,
+        };
+        return activity;
+    } catch (e) {
+        throw e;
+    }
+}
+
 module.exports.getUpcomingSchedule = getUpcomingSchedule;
 module.exports.getPastSchedule = getPastSchedule;
 module.exports.getLiveSchedule = getLiveSchedule;
 module.exports.getAllCompanies = getAllCompanies;
 module.exports.addJob = addJob;
 module.exports.addCompany = addCompany;
+module.exports.applyJob = applyJob;

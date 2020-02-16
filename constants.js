@@ -4,6 +4,11 @@ const userType = {
     admin: 3
 };
 
+const modelChoicesJobState = {
+    registered: 1,
+    placed: 2,
+};
+
 const loginErrorCodes = {
     noSuchEmailFound: 405,
     emailNotProvided: 406,
@@ -23,6 +28,14 @@ const homeErrorCodes = {
     branchAddedAlready: 411,
     skillNameNotFound: 412,
     skillAddedAlready: 413
+};
+
+const userErrorCodes = {
+    noUserIdProvided: 421
+};
+
+const userErrorMessage = {
+    noUserIdProvided: 'Please Provide UserId'
 };
 
 const homeErrorMessages = {
@@ -51,7 +64,9 @@ const placementErrorCodes = {
     noSkillsProvided: 412,
     noJobDescriptionProvided: 413,
     noPlaceProvided: 414,
-    noJobTitleProvided: 415
+    noJobTitleProvided: 415,
+    noDateProvided: 416,
+    noJobIdProvided: 422
 };
 
 const placementErrorMessage = {
@@ -59,14 +74,16 @@ const placementErrorMessage = {
     noSkillsProvided: 'Please Provide Required Skills',
     noJobDescriptionProvided: 'Please Provide Job Description',
     noPlaceProvided: 'Please Provide Place Of Visit',
-    noJobTitleProvided: 'Please Provide Job Title'
+    noJobTitleProvided: 'Please Provide Job Title',
+    noDateProvided: 'Please Provide Visit Date',
+    noJobIdProvided: 'Please Provide Job Id'
 };
 
 const companyErrorCodes = {
-    noCompanyNameProvided: 416,
+    noCompanyNameProvided: 417,
     noCompanyWebsiteProvided: 417,
-    noCompanyLogoProvided: 418,
-    companyAlreadyAdded: 419
+    noCompanyLogoProvided: 419,
+    companyAlreadyAdded: 420
 };
 
 const companyErrorMessage = {
@@ -87,3 +104,6 @@ module.exports.placementErrorCodes = Object.freeze(placementErrorCodes);
 module.exports.placementErrorMessage = Object.freeze(placementErrorMessage);
 module.exports.companyErrorCodes = Object.freeze(companyErrorCodes);
 module.exports.companyErrorMessage = Object.freeze(companyErrorMessage);
+module.exports.modelChoicesJobState = Object.freeze(modelChoicesJobState);
+module.exports.userErrorCodes = Object.freeze(userErrorCodes);
+module.exports.userErrorMessage = Object.freeze(userErrorMessage);

@@ -26,7 +26,7 @@ async function login(email, name, avatar_url) {
             if (!user) throw {
                 code: genericErrorCodes,
                 name: genericErrorMessage.someErrorOccurred,
-                message: genericErrorMessage.someErrorOccurred,
+                message: genericErrorMessage.someErrorOccurred
             };
             return user;
         }
