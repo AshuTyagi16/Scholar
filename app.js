@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const helmet = require('helmet');
 const compression = require('compression');
+const https = require('https');
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
@@ -24,6 +25,6 @@ app.get('/home', (req, res) => {
     res.status(200).send('HOME PAGE');
 });
 
-app.listen(5000, () => {
+app.listen(process.env.PORT || 5000, () => {
     console.log('App is listening on port 5000')
 });
