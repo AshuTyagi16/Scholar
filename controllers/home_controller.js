@@ -113,7 +113,7 @@ async function addBranch(branchName, subjects) {
 
 async function searchSkill(text) {
     try {
-        return await Skill.findOne({"name": {$regex: text, $options: 'i'}})
+        return await Skill.find({"name": {$regex: text, $options: 'i'}})
     } catch (e) {
         throw e;
     }
