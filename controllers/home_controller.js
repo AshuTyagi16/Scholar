@@ -111,9 +111,18 @@ async function addBranch(branchName, subjects) {
     }
 }
 
+async function searchSkill(text) {
+    try {
+        return await Skill.findOne({"name": {$regex: text, $options: 'i'}})
+    } catch (e) {
+        throw e;
+    }
+}
+
 module.exports.getAllBranches = getAllBranches;
 module.exports.getAllSubjects = getAllSubjects;
 module.exports.getAllSkills = getAllSkills;
 module.exports.addSubject = addSubject;
 module.exports.addSkill = addSkill;
 module.exports.addBranch = addBranch;
+module.exports.searchSkill = searchSkill;

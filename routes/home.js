@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {genericErrorCodes} = require('../constants');
-const {getAllBranches, getAllSubjects, getAllSkills, addSubject, addSkill, addBranch} = require('../controllers/home_controller');
+const {getAllBranches, getAllSubjects, getAllSkills, addSubject, addSkill, addBranch, searchSkill} = require('../controllers/home_controller');
 const {sendError} = require('../controllers/error_controller');
 const verifyUser = require('../middleware/verify_user');
 
@@ -48,6 +48,13 @@ router.post('/branch', verifyUser, (req, res) => {
         });
     }
     addBranch(branchName, subjects)
+        .then((result) => res.status(genericErrorCodes.success).send(result))
+        .catch(err => res.status(genericErrorCodes.someErrorOccurred).send(sendError(err.code, err.name, err.message)))
+});
+
+router.get('/searchSkill', (req, res) => {
+    const text = req.query.text;
+    searchSkill(text)
         .then((result) => res.status(genericErrorCodes.success).send(result))
         .catch(err => res.status(genericErrorCodes.someErrorOccurred).send(sendError(err.code, err.name, err.message)))
 });
