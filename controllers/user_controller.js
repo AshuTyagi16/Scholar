@@ -1,5 +1,9 @@
 const {User} = require('../models/user');
-const {loginErrorCodes, loginErrorMessage, genericErrorCodes, genericErrorMessage} = require('../constants');
+const {
+    loginErrorCodes, loginErrorMessage,
+    genericErrorCodes, genericErrorMessage,
+    userErrorCodes, userErrorMessage
+} = require('../constants');
 
 async function login(email, name, avatar_url) {
     try {
@@ -35,6 +39,35 @@ async function login(email, name, avatar_url) {
     }
 }
 
-module.exports = {
-    login
-};
+async function updateUser(userId, age, branch, userType, section, semester, skills) {
+    try {
+        console.log("UID : " + userId);
+        if (!userId) throw {
+            code: userErrorCodes.noUserIdProvided,
+            name: userErrorMessage.noUserIdProvided,
+            message: userErrorMessage.noUserIdProvided
+        };
+        let user = await User.findOne({_id: userId});
+        if (!user) throw {
+            code: userErrorCodes.userNotFound,
+            name: userErrorMessage.userNotFound,
+            message: userErrorMessage.userNotFound
+        };
+
+        return await User.findByIdAndUpdate(userId, {
+            $set: {
+                age: age,
+                branch: branch,
+                user_type: userType,
+                section: section,
+                semester: semester,
+                skills: skills
+            }
+        }, {new: true});
+    } catch (e) {
+        throw e;
+    }
+}
+
+module.exports.login = login;
+module.exports.updateUser = updateUser;

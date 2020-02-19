@@ -32,12 +32,14 @@ const homeErrorCodes = {
 
 const userErrorCodes = {
     noUserIdProvided: 421,
-    userNotAuthorized: 435
+    userNotAuthorized: 435,
+    userNotFound: 436
 };
 
 const userErrorMessage = {
     noUserIdProvided: 'Please Provide UserId',
-    userNotAuthorized: 'User Not Authorized'
+    userNotAuthorized: 'User Not Authorized',
+    userNotFound: 'User Not Found',
 };
 
 const homeErrorMessages = {
