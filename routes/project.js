@@ -3,7 +3,7 @@ const router = express.Router();
 const {assignProject} = require('../controllers/project_controller');
 const {sendError} = require('../controllers/error_controller');
 
-router.get('/assign_project', (req, res) => {
+router.post('/assign_project', (req, res) => {
     const coordinater = req.query.coordinator;
     const deadline = req.query.deadline;
     const title = req.query.title;
