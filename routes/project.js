@@ -33,7 +33,9 @@ router.post('/updateProgress', (req, res) => {
 
 router.get('/getMyProject', (req, res) => {
     const user = req.query.user;
-    getMyProject(user)
+    const arr = [];
+    arr.push(user);
+    getMyProject(arr)
         .then((result) => res.status(genericErrorCodes.success).send(result))
         .catch(err => res.status(genericErrorCodes.someErrorOccurred).send(err))
 });
