@@ -29,15 +29,7 @@ async function updateProgress(project, progress) {
 
 async function getMyProject(user) {
     try {
-        return await Project.aggregate(
-            [
-                {
-                    $match: {
-                        members: {$in: user}
-                    }
-                }
-            ]
-        );
+        return await Project.findOne({members: {$elemMatch: {$eq: user}}})
     } catch (e) {
         throw e;
     }
