@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const {assignProject} = require('../controllers/project_controller');
+const {genericErrorCodes} = require('../constants');
 
-router.post('/assign_project', (req, res) => {
+router.post('/assignproject', (req, res) => {
     const faculty = req.query.faculty;
     const title = req.query.title;
     const description = req.query.description;
