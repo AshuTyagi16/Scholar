@@ -1,7 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const {genericErrorCodes} = require('../constants');
-const {getAllBranches, getAllSubjects, getAllSkills, addSubject, addSkill, addBranch, searchSkill} = require('../controllers/home_controller');
+const {
+    getAllBranches, getAllSubjects, getAllSkills,
+    addSubject, addSkill, addBranch,
+    searchSkill, getCompanyById
+} = require('../controllers/home_controller');
 const {sendError} = require('../controllers/error_controller');
 const verifyUser = require('../middleware/verify_user');
 
@@ -19,6 +23,12 @@ router.get('/subject', (req, res) => {
 
 router.get('/skill', (req, res) => {
     getAllSkills()
+        .then((result) => res.status(genericErrorCodes.success).send(result))
+        .catch(err => res.status(genericErrorCodes.someErrorOccurred).send(err))
+});
+
+router.get('/company', (req, res) => {
+    getCompanyById(res.query.company)
         .then((result) => res.status(genericErrorCodes.success).send(result))
         .catch(err => res.status(genericErrorCodes.someErrorOccurred).send(err))
 });

@@ -1,6 +1,7 @@
 const {Branch} = require('../models/branch');
 const {Subject} = require('../models/subject');
 const {Skill} = require('../models/skill');
+const {Company} = require('../models/company');
 const {homeErrorCodes, homeErrorMessages, genericErrorCodes, genericErrorMessage} = require('../constants');
 
 async function getAllBranches() {
@@ -119,6 +120,14 @@ async function searchSkill(text) {
     }
 }
 
+async function getCompanyById(companyId) {
+    try {
+        return await Company.findOne({_id: companyId})
+    } catch (e) {
+        throw e;
+    }
+}
+
 module.exports.getAllBranches = getAllBranches;
 module.exports.getAllSubjects = getAllSubjects;
 module.exports.getAllSkills = getAllSkills;
@@ -126,3 +135,4 @@ module.exports.addSubject = addSubject;
 module.exports.addSkill = addSkill;
 module.exports.addBranch = addBranch;
 module.exports.searchSkill = searchSkill;
+module.exports.getCompanyById = getCompanyById;
