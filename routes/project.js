@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {assignProject, updateProgress, getMyProject} = require('../controllers/project_controller');
+const {assignProject, updateProgress, getMyProject, getProjectUnderFaculty} = require('../controllers/project_controller');
 const {genericErrorCodes} = require('../constants');
 
 router.post('/assignproject', (req, res) => {
@@ -40,7 +40,7 @@ router.get('/getMyProject', (req, res) => {
 
 router.get('/getProjectUnderFaculty', (req, res) => {
     const faculty = req.query.faculty;
-    getMyProject(user)
+    getProjectUnderFaculty(faculty)
         .then((result) => res.status(genericErrorCodes.success).send(result))
         .catch(err => res.status(genericErrorCodes.someErrorOccurred).send(err))
 });
