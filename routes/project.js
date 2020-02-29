@@ -38,4 +38,11 @@ router.get('/getMyProject', (req, res) => {
         .catch(err => res.status(genericErrorCodes.someErrorOccurred).send(err))
 });
 
+router.get('/getProjectUnderFaculty', (req, res) => {
+    const faculty = req.query.faculty;
+    getMyProject(user)
+        .then((result) => res.status(genericErrorCodes.success).send(result))
+        .catch(err => res.status(genericErrorCodes.someErrorOccurred).send(err))
+});
+
 module.exports = router;

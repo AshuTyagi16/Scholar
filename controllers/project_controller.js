@@ -29,7 +29,15 @@ async function updateProgress(project, progress) {
 
 async function getMyProject(user) {
     try {
-        return await Project.findOne({members: {$elemMatch: {$eq: user}}})
+        return await Project.findOne({members: {$elemMatch: {$eq: user}}}).populate('faculty', 'members')
+    } catch (e) {
+        throw e;
+    }
+}
+
+async function getProjectUnderFaculty(faculty) {
+    try {
+        return await Project.find({faculty: faculty}).populate('members')
     } catch (e) {
         throw e;
     }
@@ -38,3 +46,4 @@ async function getMyProject(user) {
 module.exports.assignProject = assignProject;
 module.exports.getMyProject = getMyProject;
 module.exports.updateProgress = updateProgress;
+module.exports.getProjectUnderFaculty = getProjectUnderFaculty;
