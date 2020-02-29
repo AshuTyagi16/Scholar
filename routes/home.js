@@ -28,7 +28,7 @@ router.get('/skill', (req, res) => {
 });
 
 router.get('/company', (req, res) => {
-    getCompanyById(res.query.company)
+    getCompanyById(req.query.company)
         .then((result) => res.status(genericErrorCodes.success).send(result))
         .catch(err => res.status(genericErrorCodes.someErrorOccurred).send(err))
 });
