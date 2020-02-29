@@ -4,7 +4,7 @@ const {assignProject} = require('../controllers/project_controller');
 const {sendError} = require('../controllers/error_controller');
 
 router.post('/assign_project', (req, res) => {
-    const coordinater = req.query.coordinator;
+    const coordinator = req.query.coordinator;
     const title = req.query.title;
     const description = req.query.description;
     let members = [];
@@ -18,7 +18,7 @@ router.post('/assign_project', (req, res) => {
         });
     }
 
-    assignProject(members, coordinater, dateTime, title, description)
+    assignProject(members, coordinator, dateTime, title, description)
         .then((result) => res.status(genericErrorCodes.success).send(result))
         .catch(err => res.status(genericErrorCodes.someErrorOccurred).send(sendError(err.code, err.name, err.message)))
 });
