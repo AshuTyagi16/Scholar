@@ -56,6 +56,32 @@ async function getUpcomingSchedule(userId) {
                         $cond: {if: {$gt: [{$size: "$isRegistered"}, 0]}, then: true, else: false}
                     }
                 }
+            },
+            {
+                $lookup: {
+                    from: "companies",
+                    let: {cid: "$company"},
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: {
+                                    $and: [
+                                        {$eq: ["$$cid", "$_id"]},
+                                    ]
+                                },
+                            }
+                        },
+                        {
+                            $project: {
+                                name: 1
+                            }
+                        }
+                    ],
+                    as: "company"
+                }
+            },
+            {
+                $unwind: "$company"
             }
         ]);
     } catch (e) {
@@ -109,6 +135,32 @@ async function getPastSchedule(userId) {
                         $cond: {if: {$gt: [{$size: "$isPlaced"}, 0]}, then: true, else: false}
                     }
                 }
+            },
+            {
+                $lookup: {
+                    from: "companies",
+                    let: {cid: "$company"},
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: {
+                                    $and: [
+                                        {$eq: ["$$cid", "$_id"]},
+                                    ]
+                                },
+                            }
+                        },
+                        {
+                            $project: {
+                                name: 1
+                            }
+                        }
+                    ],
+                    as: "company"
+                }
+            },
+            {
+                $unwind: "$company"
             }
         ]);
     } catch (e) {
@@ -167,6 +219,32 @@ async function getLiveSchedule(userId) {
                         $cond: {if: {$gt: [{$size: "$isRegistered"}, 0]}, then: true, else: false}
                     }
                 }
+            },
+            {
+                $lookup: {
+                    from: "companies",
+                    let: {cid: "$company"},
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: {
+                                    $and: [
+                                        {$eq: ["$$cid", "$_id"]},
+                                    ]
+                                },
+                            }
+                        },
+                        {
+                            $project: {
+                                name: 1
+                            }
+                        }
+                    ],
+                    as: "company"
+                }
+            },
+            {
+                $unwind: "$company"
             }
         ]);
     } catch (e) {
