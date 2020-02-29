@@ -1,10 +1,10 @@
 const {Project} = require('../models/project');
 
-async function assignProject(members, coordinator, deadline, title, description) {
+async function assignProject(members, faculty, deadline, title, description) {
     try {
         let project = new Project({
             members: members,
-            coordinator: coordinator,
+            faculty: faculty,
             deadline: deadline,
             title: title,
             description: description
@@ -45,3 +45,4 @@ async function getMyProject(user) {
 
 module.exports.assignProject = assignProject;
 module.exports.getMyProject = getMyProject;
+module.exports.updateProgress = updateProgress;

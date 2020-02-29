@@ -5,7 +5,7 @@ const projectSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectID,
         ref: 'User'
     }],
-    coordinator: {
+    faculty: {
         type: mongoose.Schema.Types.ObjectID,
         ref: 'User'
     },
@@ -25,7 +25,7 @@ const projectSchema = new mongoose.Schema({
         type: Date,
         required: true
     }
-});
+}, {timestamps: true});
 
 const Project = mongoose.model('Project', projectSchema);
 

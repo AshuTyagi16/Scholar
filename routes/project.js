@@ -1,10 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const {assignProject} = require('../controllers/project_controller');
-const {sendError} = require('../controllers/error_controller');
 
 router.post('/assign_project', (req, res) => {
-    const coordinator = req.query.coordinator;
+    const faculty = req.query.faculty;
     const title = req.query.title;
     const description = req.query.description;
     let members = [];
@@ -18,9 +17,9 @@ router.post('/assign_project', (req, res) => {
         });
     }
 
-    assignProject(members, coordinator, dateTime, title, description)
+    assignProject(members, faculty, dateTime, title, description)
         .then((result) => res.status(genericErrorCodes.success).send(result))
-        .catch(err => res.status(genericErrorCodes.someErrorOccurred).send(sendError(err.code, err.name, err.message)))
+        .catch(err => res.status(genericErrorCodes.someErrorOccurred).send(err))
 });
 
 module.exports = router;
