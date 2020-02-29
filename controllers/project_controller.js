@@ -29,7 +29,7 @@ async function updateProgress(project, progress) {
 
 async function getMyProject(user) {
     try {
-        return await Project.findOne({members: {$elemMatch: {$eq: user}}}).populate('members')
+        return await Project.findOne({members: {$elemMatch: {$eq: user}}}).populate('members').populate('faculty')
     } catch (e) {
         throw e;
     }
