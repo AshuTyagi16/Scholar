@@ -37,7 +37,6 @@ async function addSubject(subjectName) {
         };
 
         let subject = await Subject.findOne({name: subjectName});
-        console.log("SUB  : " + subject);
         if (subject) throw {
             code: homeErrorCodes.subjectAddedAlready,
             name: homeErrorMessages.subjectAddedAlready,

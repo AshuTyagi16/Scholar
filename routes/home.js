@@ -52,9 +52,7 @@ router.post('/branch', verifyUser, (req, res) => {
     let subjects = [];
     if (req.query.subjects && req.query.subjects.trim().length > 0) {
         subjects = req.query.subjects.split(",").map(id => {
-            if (id.trim().length === 24) {
-                return id.trim();
-            }
+            return id.trim();
         });
     }
     addBranch(branchName, subjects)

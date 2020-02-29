@@ -47,9 +47,7 @@ router.post('/job', verifyUser, (req, res) => {
     dateTime.setHours(hour, minute, 0, 0);
     if (req.query.skills && req.query.skills.trim().length > 0) {
         skills = req.query.skills.split(",").map(id => {
-            if (id.trim().length === 24) {
-                return id.trim();
-            }
+            return id.trim();
         });
     }
     addJob(companyId, skills, title, description, place, dateTime)
