@@ -86,7 +86,7 @@ async function getUpcomingSchedule(userId) {
             {
                 $lookup: {
                     from: "skills",
-                    localField: "skills",
+                    localField: "skill",
                     foreignField: "_id",
                     as: "skill"
                 }
@@ -173,7 +173,7 @@ async function getPastSchedule(userId) {
             {
                 $lookup: {
                     from: "skills",
-                    localField: "skills",
+                    localField: "skill",
                     foreignField: "_id",
                     as: "skill"
                 }
@@ -265,7 +265,7 @@ async function getLiveSchedule(userId) {
             {
                 $lookup: {
                     from: "skills",
-                    localField: "skills",
+                    localField: "skill",
                     foreignField: "_id",
                     as: "skill"
                 }
