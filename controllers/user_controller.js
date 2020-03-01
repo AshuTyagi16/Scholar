@@ -69,5 +69,14 @@ async function updateUser(userId, age, branch, userType, section, semester, skil
     }
 }
 
+async function findUser(text) {
+    try {
+        return await User.find({"name": {$regex: text, $options: 'i'}})
+    } catch (e) {
+        throw e;
+    }
+}
+
 module.exports.login = login;
 module.exports.updateUser = updateUser;
+module.exports.findUser = findUser;

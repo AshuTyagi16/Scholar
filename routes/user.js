@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {login, updateUser} = require('../controllers/user_controller');
+const {login, updateUser, findUser} = require('../controllers/user_controller');
 const {genericErrorCodes} = require('../constants');
 const {sendError} = require('../controllers/error_controller');
 
@@ -27,6 +27,12 @@ router.get('/updateUser', (req, res) => {
         });
     }
     updateUser(userId, age, branch, userType, section, semester, skills)
+        .then((result) => res.status(genericErrorCodes.success).send(result))
+        .catch(err => res.status(err.code).send(sendError(err.code, err.name, err.message)))
+});
+
+router.get('/find', (req, res) => {
+    findUser(req.query.name)
         .then((result) => res.status(genericErrorCodes.success).send(result))
         .catch(err => res.status(err.code).send(sendError(err.code, err.name, err.message)))
 });
