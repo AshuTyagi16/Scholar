@@ -34,7 +34,7 @@ router.get('/updateUser', (req, res) => {
 router.get('/find', (req, res) => {
     findUser(req.query.name)
         .then((result) => res.status(genericErrorCodes.success).send(result))
-        .catch(err => res.status(err.code).send(sendError(err.code, err.name, err.message)))
+        .catch(err => res.status(err.code).send(err))
 });
 
 module.exports = router;
