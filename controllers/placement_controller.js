@@ -82,6 +82,14 @@ async function getUpcomingSchedule(userId) {
             },
             {
                 $unwind: "$company"
+            },
+            {
+                $lookup: {
+                    from: "skills",
+                    localField: "skills",
+                    foreignField: "_id",
+                    as: "skill"
+                }
             }
         ]);
     } catch (e) {
@@ -161,6 +169,14 @@ async function getPastSchedule(userId) {
             },
             {
                 $unwind: "$company"
+            },
+            {
+                $lookup: {
+                    from: "skills",
+                    localField: "skills",
+                    foreignField: "_id",
+                    as: "skill"
+                }
             }
         ]);
     } catch (e) {
@@ -245,6 +261,14 @@ async function getLiveSchedule(userId) {
             },
             {
                 $unwind: "$company"
+            },
+            {
+                $lookup: {
+                    from: "skills",
+                    localField: "skills",
+                    foreignField: "_id",
+                    as: "skill"
+                }
             }
         ]);
     } catch (e) {
