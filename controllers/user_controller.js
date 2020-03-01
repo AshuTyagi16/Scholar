@@ -5,7 +5,7 @@ const {
     userErrorCodes, userErrorMessage
 } = require('../constants');
 
-async function login(email, name, avatar_url) {
+async function login(email, name, avatar_url, userType) {
     try {
         if (!email) throw {
             code: loginErrorCodes.emailNotProvided,
@@ -24,7 +24,8 @@ async function login(email, name, avatar_url) {
             user = new User({
                 name: name,
                 email: email,
-                avatar_url: avatar_url
+                avatar_url: avatar_url,
+                user_type: userType
             });
             user = await user.save();
             if (!user) throw {

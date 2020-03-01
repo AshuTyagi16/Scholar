@@ -8,7 +8,8 @@ router.get('/login', (req, res) => {
     const email = req.query.email;
     const name = req.query.name;
     const avatar_url = req.query.avatar_url;
-    login(email, name, avatar_url)
+    const userType = req.query.userType;
+    login(email, name, avatar_url, userType)
         .then((result) => res.status(genericErrorCodes.success).send(result))
         .catch(err => res.status(err.code).send(sendError(err.code, err.name, err.message)))
 });
