@@ -37,7 +37,7 @@ async function getMyProject(user) {
 
 async function getProjectUnderFaculty(faculty) {
     try {
-        return await Project.find({faculty: faculty}).populate('members')
+        return await Project.find({faculty: faculty}).populate('members').populate('faculty')
     } catch (e) {
         throw e;
     }
