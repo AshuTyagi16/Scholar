@@ -56,13 +56,12 @@ async function getAllProjects() {
 async function sendMessageToAll(title, description) {
     try {
         const user = await User.find({}, {playerId: 1, _id: 0});
-        console.log(JSON.stringify(user));
         let arr = [];
         for (let i = 0; i < user.length; i++) {
-            arr.push(user[i].playerId);
+            if (user[i].playerId != null)
+                arr.push(user[i].playerId);
         }
-        console.log(JSON.stringify(arr));
-        // await sendNotificationAll(title, description,);
+        await sendNotificationAll(title, description, arr);
         return true;
     } catch (e) {
         throw e;
