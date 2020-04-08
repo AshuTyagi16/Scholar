@@ -12,6 +12,13 @@ async function assignProject(members, faculty, deadline, title, description) {
             description: description
         });
         project = await project.save();
+        const users = User.find({_id: {$in: members}}, {playerId: 1, _id: 0});
+        const playerIds = [];
+        for (let i = 0; i < users.length; i++) {
+            if (users[i].playerId != null)
+                playerIds.push(users[i].playerId);
+        }
+        await sendNotificationAll(title, "You have been assigned a new project", playerIds);
         return project;
     } catch (e) {
         throw e;
@@ -61,7 +68,6 @@ async function sendMessageToAll(title, description) {
             if (user[i].playerId != null)
                 arr.push(user[i].playerId);
         }
-        console.log(JSON.stringify(arr));
         await sendNotificationAll(title, description, arr);
         return true;
     } catch (e) {
