@@ -1,5 +1,6 @@
 const {Project} = require('../models/project');
 const {User} = require('../models/user');
+const {sendNotificationAll} = require('./notification_controller');
 
 async function assignProject(members, faculty, deadline, title, description) {
     try {
@@ -55,6 +56,8 @@ async function getAllProjects() {
 async function sendMessageToAll(title, description) {
     try {
         const user = await User.find({}, {playerId: 1});
+        console.log(JSON.stringify(user));
+        // await sendNotificationAll(title, description,);
         return true;
     } catch (e) {
         throw e;

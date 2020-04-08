@@ -97,6 +97,21 @@ const companyErrorMessage = {
     companyAlreadyAdded: 'Company Already Exists'
 };
 
+const oneSignalConstants = {
+    optionsForSubscribedUsers: {
+        host: "onesignal.com",
+        port: 443,
+        path: "/api/v1/notifications",
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            "Authorization": "Basic Yzg1ZGIxODItNWM5OS00MmYyLTgyZmMtMGM5NjhiYThlZTVi"
+        }
+    },
+
+    appId: "3b283018-d182-4eef-a209-a31c824fe987"
+};
+
 module.exports.userType = Object.freeze(userType);
 module.exports.loginErrorCodes = Object.freeze(loginErrorCodes);
 module.exports.loginErrorMessage = Object.freeze(loginErrorMessage);
@@ -111,3 +126,4 @@ module.exports.companyErrorMessage = Object.freeze(companyErrorMessage);
 module.exports.modelChoicesJobState = Object.freeze(modelChoicesJobState);
 module.exports.userErrorCodes = Object.freeze(userErrorCodes);
 module.exports.userErrorMessage = Object.freeze(userErrorMessage);
+module.exports.oneSignalConstants = Object.freeze(oneSignalConstants);

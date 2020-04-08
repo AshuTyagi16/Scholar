@@ -42,7 +42,6 @@ async function login(email, name, avatar_url, userType) {
 
 async function updateUser(userId, age, branch, userType, section, semester, skills, playerId) {
     try {
-        console.log("UID : " + userId);
         if (!userId) throw {
             code: userErrorCodes.noUserIdProvided,
             name: userErrorMessage.noUserIdProvided,
