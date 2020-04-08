@@ -26,8 +26,8 @@ function oneSignalNotification(message) {
     const req = https.request(oneSignalConstants.optionsForSubscribedUsers, function (res) {
         res.on('data', function (data) {
             try {
-                //console.log("Response:");
-                //console.log(JSON.parse(data));
+                console.log("Response:");
+                console.log(JSON.stringify(data));
             } catch (err) {
                 console.log(err);
             }
@@ -35,6 +35,7 @@ function oneSignalNotification(message) {
     });
 
     req.on('error', function (e) {
+        console.log(e);
         throw new Error(e.message);
     });
 
