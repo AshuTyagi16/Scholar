@@ -52,6 +52,8 @@ router.get('/getAllProjects', (req, res) => {
 });
 
 router.get('/sendMessageToAll', (req, res) => {
+    const title = req.query.title;
+    const description = req.query.description;
     sendMessageToAll()
         .then((result) => res.status(genericErrorCodes.success).send(result))
         .catch(err => res.status(genericErrorCodes.someErrorOccurred).send(err))

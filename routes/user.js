@@ -21,13 +21,14 @@ router.get('/updateUser', (req, res) => {
     const userType = req.query.userType;
     const section = req.query.section;
     const semester = req.query.semester;
+    const playerId = req.query.playerId;
     let skills = [];
     if (req.query.skills && req.query.skills.trim().length > 0) {
         skills = req.query.skills.split(",").map(id => {
             return id.trim();
         });
     }
-    updateUser(userId, age, branch, userType, section, semester, skills)
+    updateUser(userId, age, branch, userType, section, semester, skills, playerId)
         .then((result) => res.status(genericErrorCodes.success).send(result))
         .catch(err => res.status(err.code).send(sendError(err.code, err.name, err.message)))
 });

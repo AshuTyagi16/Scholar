@@ -52,7 +52,7 @@ async function getAllProjects() {
     }
 }
 
-async function sendMessageToAll() {
+async function sendMessageToAll(title, description) {
     try {
         const user = await User.find({}, {playerId: 1});
         return true;
