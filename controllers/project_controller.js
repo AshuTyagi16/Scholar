@@ -61,6 +61,7 @@ async function sendMessageToAll(title, description) {
             if (user[i].playerId != null)
                 arr.push(user[i].playerId);
         }
+        console.log(JSON.stringify(arr));
         await sendNotificationAll(title, description, arr);
         return true;
     } catch (e) {
