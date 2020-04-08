@@ -12,7 +12,7 @@ async function assignProject(members, faculty, deadline, title, description) {
             description: description
         });
         project = await project.save();
-        const users = User.find({_id: {$in: members}}, {playerId: 1, _id: 0});
+        const users = await User.find({_id: {$in: members}}, {playerId: 1, _id: 0});
         const playerIds = [];
         for (let i = 0; i < users.length; i++) {
             if (users[i].playerId != null)
