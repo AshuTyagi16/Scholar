@@ -59,7 +59,7 @@ async function sendMessageToAll(title, description) {
         console.log(JSON.stringify(user));
         let arr = [];
         for (let i = 0; i < user.length; i++) {
-            arr.push(user.playerId);
+            arr.push(user[i].playerId);
         }
         console.log(JSON.stringify(arr));
         // await sendNotificationAll(title, description,);
