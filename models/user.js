@@ -31,6 +31,9 @@ const userSchema = new mongoose.Schema({
     semester: {
         type: Number
     },
+    playerId: {
+        type: String
+    },
     skills: [{
         type: mongoose.Schema.Types.ObjectID,
         ref: 'Skill'

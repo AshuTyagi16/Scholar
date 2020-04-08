@@ -40,7 +40,7 @@ async function login(email, name, avatar_url, userType) {
     }
 }
 
-async function updateUser(userId, age, branch, userType, section, semester, skills) {
+async function updateUser(userId, age, branch, userType, section, semester, skills, playerId) {
     try {
         console.log("UID : " + userId);
         if (!userId) throw {
@@ -62,7 +62,8 @@ async function updateUser(userId, age, branch, userType, section, semester, skil
                 user_type: userType,
                 section: section,
                 semester: semester,
-                skills: skills
+                skills: skills,
+                playerId: playerId
             }
         }, {new: true});
     } catch (e) {

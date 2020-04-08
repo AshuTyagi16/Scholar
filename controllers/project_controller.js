@@ -1,4 +1,5 @@
 const {Project} = require('../models/project');
+const {User} = require('../models/user');
 
 async function assignProject(members, faculty, deadline, title, description) {
     try {
@@ -43,7 +44,26 @@ async function getProjectUnderFaculty(faculty) {
     }
 }
 
+async function getAllProjects() {
+    try {
+        return await Project.find().populate('members').populate('faculty')
+    } catch (e) {
+        throw e;
+    }
+}
+
+async function sendMessageToAll() {
+    try {
+        const user = await User.find({}, {playerId: 1});
+        return true;
+    } catch (e) {
+        throw e;
+    }
+}
+
 module.exports.assignProject = assignProject;
 module.exports.getMyProject = getMyProject;
 module.exports.updateProgress = updateProgress;
 module.exports.getProjectUnderFaculty = getProjectUnderFaculty;
+module.exports.getAllProjects = getAllProjects;
+module.exports.sendMessageToAll = sendMessageToAll;
